@@ -1,0 +1,11 @@
+# Eclipse
+.buildpath
+.project
+.settings
+
+# Project
+images
+
+# OS
+.DS_Store
+Thumbs.db
