@@ -36,10 +36,13 @@ class RecipieMapper extends BaseMapper {
 			
 			// Fetch ingredients
 			require_once 'models/mappers/StepMapper.php';
+			$stepMapper = new StepMapper();
+			$recipie->setSteps($stepMapper->findByRecipie($recipie));
 			
+			return $recipie;
 		}
 		
-		// No strip found
+		// No recipie found
 		return false;
 	}
 	
@@ -57,6 +60,29 @@ class RecipieMapper extends BaseMapper {
 		}
 		
 		return $strips;
+	}
+	
+	/**
+	 * Search by ingredients
+	 */
+	public function findByIngredients(array $ingredients) {
+		/**
+		 * THE QUERY SHOULD LOOK LIKE
+		 * SELECT
+				recipies.id, recipies.title, recipies.preparation_time, recipies.thumbnail,
+				(
+					SELECT COUNT(DISTINCT `step_ingredients`.`ingredient_id`)
+					FROM `steps`
+					LEFT JOIN `step_ingredients` ON `step_ingredients`.`step_id` = `steps`.`id`
+					WHERE `steps`.`recipie_id` = `recipies`.`id` AND `step_ingredients`.`ingredient_id` IN (1,2)
+				) AS `ingredient_match`
+			FROM recipies
+			LEFT JOIN steps ON steps.recipie_id = recipies.id
+			LEFT JOIN step_ingredients ON step_ingredients.step_id = steps.id
+			WHERE step_ingredients.ingredient_id IN (1,2)
+			GROUP BY recipies.id
+			ORDER BY `ingredient_match` DESC
+		 */
 	}
 
 	/**

@@ -5,6 +5,9 @@ use Zurv\Model\Mapper\Base as BaseMapper;
 use Zurv\Registry;
 use PDO;
 
+require_once 'models/Step.php';
+require_once 'models/Ingredient.php';
+
 class StepMapper extends BaseMapper {
 	/**
 	 * @var PDO
@@ -26,13 +29,13 @@ class StepMapper extends BaseMapper {
 				`steps`.`id` AS `steps.id`,
 				`steps`.`title` AS `steps.title`,
 				`steps`.`description` AS `steps.description`,
-				`steps`.`duration` AS `steps.duration`
-				`ingredients`.`id` AS `ingredients.id`
+				`steps`.`duration` AS `steps.duration`,
+				`ingredients`.`id` AS `ingredients.id`,
 				`ingredients`.`name` AS `ingredients.name`
 			FROM `steps`
 			LEFT JOIN `step_ingredients` ON `step_ingredients`.`step_id` = `steps`.`id`
 			LEFT JOIN `ingredients` ON `ingredients`.`id` = `step_ingredients`.`ingredient_id`
-			WHERE `recipie_id` = :recipie_id
+			WHERE `steps`.`recipie_id` = :recipie_id
 		';
 		$stmt = $this->_db->prepare($sql);
 		$stmt->execute(array(':recipie_id' => $recipie->getId()));
@@ -46,7 +49,8 @@ class StepMapper extends BaseMapper {
 					'id' => $row['steps.id'],
 					'title' => $row['steps.title'],
 					'description' => $row['steps.description'],
-					'duration' => $row['steps.duration']
+					'duration' => $row['steps.duration'],
+					'recipie' => $recipie
 				));
 			}
 			

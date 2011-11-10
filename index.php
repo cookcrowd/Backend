@@ -42,7 +42,8 @@ ToroHook::add('after_request', function() {
  * Set routes.
  */
 $site = new ToroApplication(array(
-	array('/', 'AppHandler')
+	array('/', 'AppHandler'),
+	array('/recipie', 'RecipieHandler')
 ));
 
 /**
