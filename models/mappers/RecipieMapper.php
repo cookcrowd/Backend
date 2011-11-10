@@ -1,12 +1,13 @@
 <?php
 namespace Cookielicious\Model;
 
+use Zurv\Model\Mapper\Base as BaseMapper;
 use Zurv\Registry;
 use PDO;
 
 require_once 'models/Recipie.php';
 
-class RecipieMapper extends \Zurv\Model\Mapper\Base {
+class RecipieMapper extends BaseMapper {
 	protected $_db = null;
 	
 	public function __construct() {
@@ -20,13 +21,22 @@ class RecipieMapper extends \Zurv\Model\Mapper\Base {
 	 * @return Recipie|false
 	 */
 	public function findById($id) {
-		$stmt = $this->_db->prepare('SELECT * FROM `images` WHERE `id` = :id');
+		$sql = '
+			SELECT `id`, `title`, `preparation_time`, `thumbnail`
+			FROM `recipies`
+			WHERE `id` = :id
+		';
+		$stmt = $this->_db->prepare($sql);
 		
 		$stmt->execute(array(':id' => $id));
-		$strip = $stmt->fetch(PDO::FETCH_ASSOC);
+		$recipie = $stmt->fetch(PDO::FETCH_ASSOC);
 		
-		if(! empty($strip)) {
-			return $this->create($strip);	
+		if(! empty($recipie)) {
+			$recipie = $this->create($recipie);
+			
+			// Fetch ingredients
+			require_once 'models/mappers/StepMapper.php';
+			
 		}
 		
 		// No strip found
