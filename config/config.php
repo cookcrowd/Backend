@@ -5,7 +5,7 @@ ini_set('display_errors', true);
 /**
  * Configuration
  */
-define('ZURV_BASE_HREF', 'http://localhost:8888/cookielicious_backend/');
+define('ZURV_BASE_HREF', 'http://localhost:8888/cookielicious/');
 
 define('ZURV_MYSQL_HOST', '127.0.0.1');
 define('ZURV_MYSQL_PORT', '8889'); // defaults to 3306
