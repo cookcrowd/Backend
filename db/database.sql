@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.9)
 # Datenbank: cookielicious
-# Erstellungsdauer: 2011-11-09 14:42:53 +0100
+# Erstellungsdauer: 2011-11-15 12:47:36 +0100
 # ************************************************************
 
 
@@ -34,33 +34,17 @@ CREATE TABLE `ingredients` (
 
 
 
-# Export von Tabelle recipies
+# Export von Tabelle recipes
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `recipies`;
+DROP TABLE IF EXISTS `recipes`;
 
-CREATE TABLE `recipies` (
+CREATE TABLE `recipes` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(80) NOT NULL DEFAULT '',
   `preparation_time` smallint(4) NOT NULL,
-  `thumbnail` varchar(80) DEFAULT NULL,
+  `image` varchar(80) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-# Export von Tabelle step_images
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `step_images`;
-
-CREATE TABLE `step_images` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `step_id` int(11) unsigned NOT NULL,
-  `src` varchar(80) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `fk_image_step` (`step_id`),
-  CONSTRAINT `fk_image_step` FOREIGN KEY (`step_id`) REFERENCES `steps` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -75,8 +59,8 @@ CREATE TABLE `step_ingredients` (
   `step_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`ingredient_id`,`step_id`),
   KEY `fk_step_ingredients_step` (`step_id`),
-  CONSTRAINT `fk_step_ingredients_step` FOREIGN KEY (`step_id`) REFERENCES `steps` (`id`),
-  CONSTRAINT `fk_step_ingredients_ingredient` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredients` (`id`)
+  CONSTRAINT `fk_step_ingredients_ingredient` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredients` (`id`),
+  CONSTRAINT `fk_step_ingredients_step` FOREIGN KEY (`step_id`) REFERENCES `steps` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -104,13 +88,14 @@ DROP TABLE IF EXISTS `steps`;
 
 CREATE TABLE `steps` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `recipie_id` int(11) unsigned NOT NULL,
+  `recipe_id` int(11) unsigned NOT NULL,
   `title` varchar(80) NOT NULL DEFAULT '',
   `description` text NOT NULL,
   `duration` smallint(4) NOT NULL,
+  `image` varchar(80) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
-  KEY `fk_step_recipie` (`recipie_id`),
-  CONSTRAINT `fk_step_recipie` FOREIGN KEY (`recipie_id`) REFERENCES `recipies` (`id`)
+  KEY `fk_step_recipie` (`recipe_id`),
+  CONSTRAINT `fk_step_recipie` FOREIGN KEY (`recipe_id`) REFERENCES `recipes` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
