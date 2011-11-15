@@ -19,26 +19,27 @@ class StepMapper extends BaseMapper {
 	}
 	
 	/**
-	 * Find all steps for a recipie
+	 * Find all steps for a recipe
 	 * 
-	 * @param Recipie|id $recipie
+	 * @param Recipe|id $recipe
 	 */
-	public function findByRecipie(Recipie $recipie) {
+	public function findByRecipe(Recipe $recipe) {
 		$sql = '
 			SELECT
 				`steps`.`id` AS `steps.id`,
 				`steps`.`title` AS `steps.title`,
 				`steps`.`description` AS `steps.description`,
 				`steps`.`duration` AS `steps.duration`,
+				`steps`.`image` AS `steps.image`,
 				`ingredients`.`id` AS `ingredients.id`,
 				`ingredients`.`name` AS `ingredients.name`
 			FROM `steps`
 			LEFT JOIN `step_ingredients` ON `step_ingredients`.`step_id` = `steps`.`id`
 			LEFT JOIN `ingredients` ON `ingredients`.`id` = `step_ingredients`.`ingredient_id`
-			WHERE `steps`.`recipie_id` = :recipie_id
+			WHERE `steps`.`recipe_id` = :recipe_id
 		';
 		$stmt = $this->_db->prepare($sql);
-		$stmt->execute(array(':recipie_id' => $recipie->getId()));
+		$stmt->execute(array(':recipe_id' => $recipe->getId()));
 		
 		// Loop through all ingredients containing corresponding step information
 		$steps = array();
@@ -50,7 +51,8 @@ class StepMapper extends BaseMapper {
 					'title' => $row['steps.title'],
 					'description' => $row['steps.description'],
 					'duration' => $row['steps.duration'],
-					'recipie' => $recipie
+					'image' => $row['steps.image'],
+					'recipe' => $recipe
 				));
 			}
 			

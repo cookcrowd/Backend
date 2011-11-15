@@ -43,7 +43,9 @@ ToroHook::add('after_request', function() {
  */
 $site = new ToroApplication(array(
 	array('/', 'AppHandler'),
-	array('/recipie', 'RecipieHandler')
+	array('/recipe/([1-9][0-9]*)', 'RecipeHandler'),
+	array('/recipes', 'RecipesHandler'),
+	array('/ingredients', 'IngredientsHandler')
 ));
 
 /**

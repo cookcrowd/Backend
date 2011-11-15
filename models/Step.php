@@ -9,8 +9,9 @@ class Step extends BaseEntity {
 		'title' => '',
 		'description' => '',
 		'duration' => 0,
-		'recipie' => null,
-		'ingredients' => array()
+		'recipe' => null,
+		'ingredients' => array(),
+		'image' => ''
 	);
 	
 	public function addIngredient(Ingredient $i) {
@@ -27,5 +28,23 @@ class Step extends BaseEntity {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * @see Zurv\Model\Entity.Base::toArray()
+	 */
+	public function toArray($nonRecursive = false) {
+		$array = $this->_attributes;
+		
+		foreach($array['ingredients'] as &$ingredient) {
+			$ingredient = $ingredient->toArray();
+		}
+		
+		// Non recursive
+		if($nonRecursive) {
+			unset($array['recipe']);
+		}
+		
+		return $array;
 	}
 } 

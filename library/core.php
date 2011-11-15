@@ -146,6 +146,20 @@ abstract class Base implements \Zurv\Model\Entity {
 		return $this->_attributes;
 	}
 	
+	protected function _toArray($array) {
+		$return = array();
+		
+		foreach($array as $key => $value) {
+			if(is_object($value) && method_exists($value, "toArray")) {
+				$value = $value->toArray();
+			}
+			
+			$return[$key] = $value;
+		}
+		
+		return $return;
+	}
+	
 	/**
 	 * Magig getters and setters.
 	 * @param string $method
