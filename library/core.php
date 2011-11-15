@@ -318,7 +318,7 @@ class FileView implements \Zurv\View\Adapter {
 	
 	public function __construct($file) {
 		if(! file_exists($file)) {
-			throw new \InvalidArgumentException("Could not load view {$view}");
+			throw new \InvalidArgumentException("Could not load view {$file}");
 		}
 		
 		$this->_template = $file;
@@ -329,7 +329,7 @@ class FileView implements \Zurv\View\Adapter {
 		
 		ob_start();
 		extract($vars);
-		include $this->_view;
+		include $this->_template;
 		$render = ob_get_contents();
 		ob_end_clean();
 		
@@ -366,7 +366,7 @@ class Factory {
 		$type = array_shift($args);
 		switch($type) {
 			case self::FILE:
-				$adapter = new \ReflectionClass('FileView');
+				$adapter = new \ReflectionClass('\Zurv\View\Adapter\FileView');
 				$adapter = $adapter->newInstanceArgs($args);
 				break;
 			case self::JSON:
