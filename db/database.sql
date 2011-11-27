@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.9)
 # Datenbank: cookielicious
-# Erstellungsdauer: 2011-11-15 12:47:36 +0100
+# Erstellungsdauer: 2011-11-27 19:04:35 +0100
 # ************************************************************
 
 
@@ -57,6 +57,8 @@ DROP TABLE IF EXISTS `step_ingredients`;
 CREATE TABLE `step_ingredients` (
   `ingredient_id` int(11) unsigned NOT NULL,
   `step_id` int(11) unsigned NOT NULL,
+  `amount` smallint(6) NOT NULL,
+  `unit` varchar(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`ingredient_id`,`step_id`),
   KEY `fk_step_ingredients_step` (`step_id`),
   CONSTRAINT `fk_step_ingredients_ingredient` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredients` (`id`),
