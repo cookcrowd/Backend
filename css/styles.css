@@ -12,10 +12,17 @@ html, body { background-color: #D2D2D2; font: 12px/18px helvetica, verdana, aria
 
 
 /*
-Form inputs
+Forms
 */
+legend { color: #333; text-shadow: 0 1px 1px rgba(0, 0, 0, .25); font-size: 16px; }
+
+label { clear: left; float: left; height: 24px; line-height: 24px; text-align: right; width: 120px; margin-right: 15px; }
 label:after { content: ':'; }
-input[type="submit"], input.submit { border: none; cursor: pointer; padding: 6px 10px; }
+
+input { height: 16px; line-height: 16px; padding: 4px; margin-bottom: 10px; }
+input[type="submit"], input.submit { border: none; cursor: pointer; height: auto; padding: 5px 10px; }
+
+textarea { min-width:400px; max-width: 400px; width: 400px; min-height: 100px; max-height: 400px; height: 100px; padding: 4px; }
 
 /*
 Classes
@@ -42,6 +49,10 @@ Classes
     display: inline-block; padding: 4px 10px;
 }
 .button:active { text-shadow: -1px -1px 0 rgba(0, 0, 0, .3); }
+
+/* Lists */
+li { list-style-position: inside; }
+.square li { list-style-type: square; }
 
 .small-border-radius { -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
 .border-radius { -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }

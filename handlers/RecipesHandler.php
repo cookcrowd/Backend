@@ -2,7 +2,7 @@
 use Cookielicious\Model\RecipeMapper;
 
 class RecipesHandler extends BaseHandler {
-	public function get() {
+	public function get_xhr() {
 		$ingredients = isset($_GET['ingredients']) ? $_GET['ingredients'] : array();
 		
 		if(! is_array($ingredients) || empty($ingredients)) {

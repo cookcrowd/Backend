@@ -6,7 +6,7 @@ class RecipeHandler extends BaseHandler {
 	 * Returns a recipe by its id. If no recipe found, sends an error
 	 * @param int $id
 	 */
-	public function get($id) {
+	public function get_xhr($id) {
 		require_once 'models/mappers/RecipeMapper.php';
 
 		$recipeMapper = new RecipeMapper();

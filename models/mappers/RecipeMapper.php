@@ -142,17 +142,57 @@ class RecipeMapper extends BaseMapper {
 	 * @param Recipe $recipe
 	 */
 	public function insert($recipe) {
-		$sql = '
-			INSERT INTO `recipes`
-			()
-			VALUES ()
-		';
-		$stmt = $this->_db->prepare($sql);
-		return $stmt->execute(
-			array(
-				// TODO: Set statement parameters
-			)
-		);
+		$this->_db->beginTransaction();
+		
+		try {
+			$sql = '
+				INSERT INTO `recipes` (`title`, `preparation_time`, `image`)
+				VALUES (:title, :preparation_time, :image)
+			';
+			$stmt = $this->_db->prepare($sql);
+			$stmt->execute(array(
+				':title' => $recipe->getTitle(),
+				':preparation_time' => $recipe->getPreparationTime(),
+				':image' => $recipe->getImage()
+			));
+			
+			$id = $this->_db->lastInsertId();
+			
+			foreach($recipe->getSteps() as $step) {
+				$sql = '
+					INSERT INTO `steps` (`recipe_id`, `title`, `description`, `duration`, `image`)
+					VALUES (:recipe_id, :title, :description, :duration, :image)
+				';
+				$stmt = $this->_db->prepare($sql);
+				$stmt->execute(array(
+					':recipe_id' => $id,
+					':title' => $step->getTitle(),
+					':description' => $step->getDescription(),
+					':duration' => $step->getDuration(),
+					':image' => $step->getImage()
+				));
+				
+				$currStepId = $this->_db->lastInsertId();
+				foreach($step->getIngredients() as $ingredient) {
+					$sql = '
+						INSERT INTO `step_ingredients` (`step_id`, `ingredient_id`, `amount`, `unit`)
+						VALUE (:step_id, :ingredient_id, :amount, :unit)
+					';
+					
+					$stmt = $this->_db->prepare($sql);
+					$stmt->execute(array(
+						':step_id' => $currStepId,
+						':ingredient_id' => $ingredient->getId(),
+						':amount' => $ingredient->getAmount(),
+						':unit' => $ingredient->getUnit()
+					));
+				}
+			}
+			
+			$this->_db->commit();
+		} catch(Exception $e) {
+			$this->_db->rollBack();
+		}
 	}
 	
 	/**

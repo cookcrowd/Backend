@@ -21,3 +21,4 @@ date_default_timezone_set('Europe/Berlin');
  */
 Zurv\Registry::getInstance()->db = new PDO('mysql:host=' . ZURV_MYSQL_HOST . ';port=' . ZURV_MYSQL_PORT . ';dbname=' . ZURV_MYSQL_DBNAME . '', ZURV_MYSQL_USER, ZURV_MYSQL_PASS);
 Zurv\Registry::getInstance()->db->query('SET NAMES "' . ZURV_MYSQL_ENCODING . '"');
+Zurv\Registry::getInstance()->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

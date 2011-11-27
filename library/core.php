@@ -114,7 +114,7 @@ abstract class Base implements \Zurv\Model\Mapper {
 
 namespace Zurv\Model\Entity;
 
-abstract class Base implements \Zurv\Model\Entity {
+abstract class Base implements \Zurv\Model\Entity, \ArrayAccess {
 	protected $_attributes = array();
 	
 	/**
@@ -233,6 +233,27 @@ abstract class Base implements \Zurv\Model\Entity {
 	 */
 	protected function _getKey($key) {
 		return strtolower(substr(preg_replace('/([A-Z])/', '_\1', $key), 1));
+	}
+	
+	public function offsetExists($key) {
+		return isset($this->_attributes[$key]);
+	}
+	
+	public function offsetGet($key) {
+		return $this->_attributes[$key];
+	}
+	
+	public function offsetSet ($key, $value) {
+		if(array_key_exists($key, $this->_attributes)) {
+			$this->_attributes[$key] = $value;
+		}
+		else {
+			throw new OutOfBoundsException("Invalid access to attribute {$key}");
+		}
+	}
+	
+	public function offsetUnset ($key) {
+		$this->_attributes[$key] = null;
 	}
 }
 
