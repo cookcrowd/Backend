@@ -146,6 +146,25 @@ abstract class Base implements \Zurv\Model\Entity, \ArrayAccess {
 		return $this->_attributes;
 	}
 	
+	/**
+	 * Checks, if two entities are equal by values
+	 * 
+	 * @param Entity $e
+	 */
+	public function equals(\Zurv\Model\Entity $e) {
+		foreach($e->toArray() as $key => $value) {
+			if(! $this->has($key)) {
+				return false;
+			}
+			
+			if($this[$key] !== $value) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	protected function _toArray($array) {
 		$return = array();
 		

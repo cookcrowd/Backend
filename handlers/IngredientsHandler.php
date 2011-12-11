@@ -24,6 +24,10 @@ class IngredientsHandler extends BaseHandler {
 		// Convert each ingredient to its array representation
 		foreach($ingredients as &$ingredient) {
 			$ingredient = $ingredient->toArray();
+			
+			// Remove unneccesary data, keep responses small
+			unset($ingredient['amount']);
+			unset($ingredient['unit']);
 		}
 		
 		return $this->_view->display($ingredients);

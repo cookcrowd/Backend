@@ -97,7 +97,7 @@ class ManageHandler extends BaseHandler {
 							throw new Exception('Cannot move step uploaded file');
 						}
 						
-						$step->setImage($filename. $ext);
+						$step->setImage($filename . $ext);
 					}
 					
 					$recipe->addStep($step);
