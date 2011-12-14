@@ -121,6 +121,41 @@ class RecipeMapper extends BaseMapper {
 		
 		return ! empty($recipes) ? $recipes : false;
 	}
+	
+	/**
+	* Count recipes by ingredients
+	*
+	* @param array $ingredients
+	* @return int
+	*/
+	public function countByIngredients(array $ingredients) {
+		// Repeat where condition for each ingredient
+		$where = substr(
+		str_repeat('`ingredients`.`name` LIKE ? OR ', count($ingredients)), // Repeat sql where condition for each ingredient
+		0, // Start at string positon 0
+		-4 // Cut trailing ' OR '
+		);
+	
+		$sql = "
+				SELECT
+					COUNT(DISTINCT `recipes`.`id`) AS `count`
+				FROM `recipes`
+				LEFT JOIN `steps` ON `steps`.`recipe_id` = `recipes`.`id`
+				LEFT JOIN `step_ingredients` ON `step_ingredients`.`step_id` = `steps`.`id`
+				WHERE `step_ingredients`.`ingredient_id` IN (
+					SELECT `ingredients`.`id`
+					FROM `ingredients`
+					WHERE {$where}
+				)
+			";
+
+		$stmt = $this->_db->prepare($sql);
+		$stmt->execute($ingredients);
+	
+		$count = $stmt->fetch(PDO::FETCH_ASSOC);
+	
+		return $count['count'];
+	}
 
 	/**
 	 * Saves a recipe to the database

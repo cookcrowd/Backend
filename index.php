@@ -45,6 +45,7 @@ $site = new ToroApplication(array(
 	array('/', 'AppHandler'),
 	array('/recipe/([1-9][0-9]*)', 'RecipeHandler'),
 	array('/recipes', 'RecipesHandler'),
+	array('/recipes/count', 'RecipesCountHandler'),
 	array('/ingredients', 'IngredientsHandler'),
 	array('/manage', 'ManageHandler')
 ));
