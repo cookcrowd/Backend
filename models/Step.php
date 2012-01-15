@@ -9,6 +9,8 @@ class Step extends BaseEntity {
 		'title' => '',
 		'description' => '',
 		'duration' => 0,
+		'timeable' => 0,
+		'timer_name' => '',
 		'recipe' => null,
 		'ingredients' => array(),
 		'todos' => array(),

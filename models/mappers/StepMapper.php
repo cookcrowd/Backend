@@ -32,6 +32,8 @@ class StepMapper extends BaseMapper {
 				`steps`.`description` AS `steps.description`,
 				`steps`.`duration` AS `steps.duration`,
 				`steps`.`image` AS `steps.image`,
+				`steps`.`timeable` AS `steps.timeable`,
+				`steps`.`timer_name` AS `steps.timer_name`,
 				`step_todos`.`id` AS `todos.id`,
 				`step_todos`.`description` AS `todos.description`,
 				`ingredients`.`id` AS `ingredients.id`,
@@ -58,6 +60,8 @@ class StepMapper extends BaseMapper {
 					'description' => $row['steps.description'],
 					'duration' => $row['steps.duration'],
 					'image' => $row['steps.image'],
+					'timeable' => $row['steps.timeable'],
+					'timer_name' => $row['steps.timer_name'],
 					'recipe' => $recipe
 				));
 			}
