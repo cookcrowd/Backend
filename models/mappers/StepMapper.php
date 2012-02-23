@@ -45,6 +45,7 @@ class StepMapper extends BaseMapper {
 			LEFT JOIN `step_ingredients` ON `step_ingredients`.`step_id` = `steps`.`id`
 			LEFT JOIN `ingredients` ON `ingredients`.`id` = `step_ingredients`.`ingredient_id`
 			WHERE `steps`.`recipe_id` = :recipe_id
+			ORDER BY `steps`.`id` ASC
 		';
 		$stmt = $this->_db->prepare($sql);
 		$stmt->execute(array(':recipe_id' => $recipe->getId()));
@@ -82,6 +83,8 @@ class StepMapper extends BaseMapper {
 				)));
 			}
 		}
+		
+		ksort($steps);
 		
 		return $steps;
 	}
