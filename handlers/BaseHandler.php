@@ -30,8 +30,7 @@ class BaseHandler extends ToroHandler {
 			$adapter = AdapterFactory::create(AdapterFactory::JSON);
 		}
 		else {
-			$adapter = AdapterFactory::create(AdapterFactory::FILE);
-			$adapter->setTemplate($this->_template);
+			$adapter = AdapterFactory::create(AdapterFactory::FILE, $this->_template);
 		}
 		
 		$this->_view->setAdapter($adapter);

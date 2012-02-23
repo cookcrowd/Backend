@@ -82,10 +82,10 @@ class ToroApplication {
             if (!$method_arguments) {
                 $method_arguments = $regex_matches;
             }
-
+            
             // XHR (must come first), iPad, mobile catch all
             if ($this->xhr_request() && method_exists($discovered_handler, $request_method . '_xhr')) {
-                header('Content-type: application/json');
+            	header('Content-type: application/json');
                 header('Pragma: no-cache');
                 header('Cache-Control: no-cache, must-revalidate');
                 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -97,12 +97,14 @@ class ToroApplication {
             else if ($this->mobile_request() && method_exists($discovered_handler, $request_method . '_mobile')) {
                 $request_method .= '_mobile';
             }
-
+            
             ToroHook::fire('before_handler');
+            
             if(method_exists($handler_instance, 'ajax')) {
-            	$handler_instance->ajax(true);
+            	$handler_instance->ajax(stristr($request_method, '_xhr'));
             }
             call_user_func_array(array($handler_instance, $request_method), $method_arguments);
+
             ToroHook::fire('after_handler');
         }
         else {
@@ -122,8 +124,12 @@ class ToroApplication {
         return NULL;
     }
 
+    private function debug_xhr() {
+    	return isset($_REQUEST['DEBUG_XHR']);
+    }
+    
     private function xhr_request() {
-        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
+        return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') || isset($_REQUEST['DEBUG_XHR']);
     }
 
     private function ipad_request() {

@@ -114,7 +114,7 @@ abstract class Base implements \Zurv\Model\Mapper {
 
 namespace Zurv\Model\Entity;
 
-abstract class Base implements \Zurv\Model\Entity {
+abstract class Base implements \Zurv\Model\Entity, \ArrayAccess {
 	protected $_attributes = array();
 	
 	/**
@@ -144,6 +144,39 @@ abstract class Base implements \Zurv\Model\Entity {
 	 */
 	public function toArray() {
 		return $this->_attributes;
+	}
+	
+	/**
+	 * Checks, if two entities are equal by values
+	 * 
+	 * @param Entity $e
+	 */
+	public function equals(\Zurv\Model\Entity $e) {
+		foreach($e->toArray() as $key => $value) {
+			if(! $this->has($key)) {
+				return false;
+			}
+			
+			if($this[$key] !== $value) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	protected function _toArray($array) {
+		$return = array();
+		
+		foreach($array as $key => $value) {
+			if(is_object($value) && method_exists($value, "toArray")) {
+				$value = $value->toArray();
+			}
+			
+			$return[$key] = $value;
+		}
+		
+		return $return;
 	}
 	
 	/**
@@ -219,6 +252,27 @@ abstract class Base implements \Zurv\Model\Entity {
 	 */
 	protected function _getKey($key) {
 		return strtolower(substr(preg_replace('/([A-Z])/', '_\1', $key), 1));
+	}
+	
+	public function offsetExists($key) {
+		return isset($this->_attributes[$key]);
+	}
+	
+	public function offsetGet($key) {
+		return $this->_attributes[$key];
+	}
+	
+	public function offsetSet ($key, $value) {
+		if(array_key_exists($key, $this->_attributes)) {
+			$this->_attributes[$key] = $value;
+		}
+		else {
+			throw new OutOfBoundsException("Invalid access to attribute {$key}");
+		}
+	}
+	
+	public function offsetUnset ($key) {
+		$this->_attributes[$key] = null;
 	}
 }
 
@@ -304,7 +358,7 @@ class FileView implements \Zurv\View\Adapter {
 	
 	public function __construct($file) {
 		if(! file_exists($file)) {
-			throw new \InvalidArgumentException("Could not load view {$view}");
+			throw new \InvalidArgumentException("Could not load view {$file}");
 		}
 		
 		$this->_template = $file;
@@ -315,7 +369,7 @@ class FileView implements \Zurv\View\Adapter {
 		
 		ob_start();
 		extract($vars);
-		include $this->_view;
+		include $this->_template;
 		$render = ob_get_contents();
 		ob_end_clean();
 		
@@ -352,7 +406,7 @@ class Factory {
 		$type = array_shift($args);
 		switch($type) {
 			case self::FILE:
-				$adapter = new \ReflectionClass('FileView');
+				$adapter = new \ReflectionClass('\Zurv\View\Adapter\FileView');
 				$adapter = $adapter->newInstanceArgs($args);
 				break;
 			case self::JSON:
