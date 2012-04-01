@@ -5,6 +5,8 @@
 
 # Project
 images
+assets
+test.png
 
 # OS
 .DS_Store

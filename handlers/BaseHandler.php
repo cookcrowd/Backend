@@ -1,7 +1,8 @@
 <?php
 use Zurv\View\View;
 use Zurv\View\Adapter\Factory as AdapterFactory;
-class BaseHandler extends ToroHandler {
+
+abstract class BaseHandler extends ToroHandler {
 	protected $_db = null;
 	
 	/**
