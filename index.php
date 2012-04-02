@@ -50,7 +50,9 @@ $site = new ToroApplication(array(
 	array('/manage', 'ManageHandler'),
 	array('/manage/list', 'ManageListHandler'),
 	array('/manage/edit/([1-9][0-9]*)', 'ManageEditHandler'),
-	array('/manage/delete/([1-9][0-9]*)', 'ManageDeleteHandler')
+	array('/manage/delete/([1-9][0-9]*)', 'ManageDeleteHandler'),
+	array('/manage/ingredients', 'ManageIngredientsHandler'),
+	array('/manage/assets', 'ManageAssetsHandler')
 ));
 
 /**

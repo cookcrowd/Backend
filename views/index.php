@@ -54,8 +54,8 @@
                   <li><a href="#">Suche</a></li>
                 </ul>
               </li>
-              <li><a href="#">Zutatenliste</a></li></li>
-              <li><a href="#">Bilder</a></li>
+              <li><a href="manage/ingredients">Zutatenliste</a></li></li>
+              <li><a href="manage/assets">Bilder</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
