@@ -1,0 +1,61 @@
+@charset "utf-8";
+@import "mixins.less";
+
+[class^="icon-"],
+[class*=" icon-"] {
+  background-image: url("images/glyphicons-halflings.png");
+}
+.icon-white {
+  background-image: url("images/glyphicons-halflings-white.png");
+}
+
+// My custom classes
+tr .btn-group {
+      margin: 0 auto;
+  visibility: hidden;
+}
+
+tr:hover .btn-group {
+  visibility: visible;
+}
+
+tr td:nth-child(5n+5) {
+  width: 100px;
+}
+
+td.recipe-image {
+  width: 64px;
+}
+td.recipe-image img {
+   max-width: 64px;
+  max-height: 64px;
+}
+
+.text-centered {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.dropdown-menu.tiny {
+  min-width: 80px;
+}
+
+.label {
+       display: inline-block;
+  margin-right: 0px;
+      overflow: hidden;
+}
+.label .append {
+  background-color: rgba(255, 0, 0, .25);
+       border-left: 1px solid #888;
+            height: 17px;
+       line-height: 17px;
+           display: inline-block;
+            margin: -1px -5px -2px 0;
+           padding: 0 5px 0 3px;
+       .box-shadow(inset 1px 0 0 #aaa);
+    .border-radius(0 inherit 0 inherit);
+}
+.label .append:hover {
+  background-color: #DA4F49;
