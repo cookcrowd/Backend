@@ -42,13 +42,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">cookielicious</a>
+          <a class="brand" href="manage/">cookielicious</a>
           <div class="nav-collapse">
             <ul class="nav">
               <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Rezepte <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Neues Rezept</a></li>
+                  <li><a href="manage/add">Neues Rezept</a></li>
                   <li class="divider"></li>
                   <li><a href="manage/list">Liste</a></li>
                   <li><a href="#">Suche</a></li>
@@ -78,6 +78,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-1.7.js"></script>
+    <script src="js/jquery.jqote2.js"></script>
     <script src="js/bootstrap/bootstrap-transition.js"></script>
     <script src="js/bootstrap/bootstrap-alert.js"></script>
     <script src="js/bootstrap/bootstrap-modal.js"></script>
@@ -90,7 +91,7 @@
     <script src="js/bootstrap/bootstrap-collapse.js"></script>
     <script src="js/bootstrap/bootstrap-carousel.js"></script>
     <script src="js/bootstrap/bootstrap-typeahead.js"></script>
-
+    <script src="js/script.js"></script>
   </body>
 </html>
 <!--

@@ -1,4 +1,8 @@
+<?php if($recipe->getId() !== -1): ?>
 <h1>Bearbeiten <small>ID: <?php echo $recipe->getId(); ?> - <?php echo $recipe->getTitle(); ?></small></h1>
+<?php else: ?>
+<h1>Neues Rezept <small>Ein neues Rezept anlegen</small></h1>
+<?php endif; ?>
 
 <form class="form-horizontal">
   <fieldset>
@@ -97,8 +101,82 @@
       
   </fieldset>
   <?php endforeach; ?>
+
   <div class="form-actions">
-    <button type="submit" class="btn btn-primary">Speichern</button>
-    <button class="btn">Abbrechen</button>
+    <div class="btn-toolbar">
+      <div class="btn-group">  
+        <button class="btn add-step"><i class="icon-plus"></i> Weiterer Schritt</button>
+        <button class="btn">Abbrechen</button>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary">Speichern</button>
+      </div>
+    </div>
   </div>
 </form>
+
+<!-- jqote template -->
+<script type="text/x-jqote-template" id="tpl-step">
+<fieldset>
+  <legend>Schritt <%= this.step %></legend>
+
+  <div class="control-group">
+    <label class="control-label" for="steps-<%= this.step %>-titel">Titel</label>
+    <div class="controls">
+      <input type="text" class="input-xlarge" name="steps[<%= this.step %>][titel]" id="steps-<%= this.step %>-titel" value="">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="steps-<%= this.step %>-duration">Dauer</label>
+    <div class="controls">
+      <input type="text" class="input-mini text-centered" name="steps[<%= this.step %>][duration]" id="steps-<%= this.step %>-duration" value="">
+      <span class="help-inline">in Minuten</span>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="steps-<%= this.step %>-duration">Zutaten</label>
+    <div class="controls">
+      <div class="input-append dropdown">
+        <input type="text" class="input-mini add-ingredient-amount text-centered"><button class="btn dropdown-toggle" data-toggle="dropdown"><span class="ingredient-unit">g</span> <span class="caret"></span></button>
+        <ul class="dropdown-menu pull-right tiny text-right">
+          <li><a href="#">l</a></li>
+          <li><a href="#">ml</a></li>
+        </ul>
+      </div>
+
+      <input type="text" class="input-medium add-ingredient">
+      <button class="btn"><i class="icon-plus"></i></button>
+
+      <p class="help-block ingredients"></p>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="steps-<%= this.step %>-timeable">Timer setzen?</label>
+    <div class="controls">
+      <label class="checkbox">
+        <input type="checkbox" name="steps[<%= this.step %>][timeable]" id="steps-<%= this.step %>-timeable">
+      </label>
+    </div>
+  </div>  
+
+  <div class="control-group">
+    <label class="control-label" for="steps-<%= this.step %>-timername">Timername</label>
+    <div class="controls">
+      <input type="text" class="input-xlarge" name="steps[<%= this.step %>][timername]" id="steps-<%= this.step %>-timername" value="">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="steps-<%= this.step %>-image">Bild</label>
+    <div class="controls">
+      <input type="file" class="input-xlarge" name="steps[<%= this.step %>][image]" id="steps-<%= this.step %>-image" accept="image/jpg,image/jpeg,image/gif,image/png">
+      <span class="help-inline">Bilddateien (.jpg, .gif, .png)</span>
+    </div>
+  </div>
+    
+</fieldset>
+</script>
+<!-- end jqote template -->
