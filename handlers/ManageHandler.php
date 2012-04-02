@@ -10,14 +10,6 @@ class ManageHandler extends AuthBaseHandler {
   const UPLOAD_PATH = 'assets/';
   const INGREDIENT_SEPARATOR = ':::';
   
-  /**
-   * Permitted backend users
-   * @var array
-   */
-  public static $users = array(
-    'admin' => 'admin'
-  );
-  
   protected $_template = 'index.php';
   
   public function get() {

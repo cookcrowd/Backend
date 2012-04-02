@@ -1,6 +1,12 @@
 <?php
 abstract class AuthBaseHandler extends BaseHandler {
-  public static $users = array();
+  /**
+   * Permitted backend users
+   * @var array
+   */
+  public static $users = array(
+    'admin' => 'admin'
+  );
 
   /**
    * Performs a http auth check

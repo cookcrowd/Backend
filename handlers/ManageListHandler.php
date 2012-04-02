@@ -9,14 +9,6 @@ use \Zurv\View\Adapter\Factory as ViewFactory;
 class ManageListHandler extends AuthBaseHandler {
   protected $_template = 'index.php';
 
-  /**
-   * Permitted backend users
-   * @var array
-   */
-  public static $users = array(
-    'admin' => 'admin'
-  );
-
   public function get() {
     $this->isLoggedIn();
 
@@ -29,7 +21,7 @@ class ManageListHandler extends AuthBaseHandler {
     $listView = new View($viewAdapter);
 
     $listView->latestRecipes = $latestRecipes;
-    
+
     $this->_view->content = $listView;
     $this->_view->display();
   }

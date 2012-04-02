@@ -9,5 +9,18 @@
 }
 
 /** My custom classes **/
-tr .btn-group { float: right; visibility: hidden; }
+tr .btn-group { margin: 0 auto; visibility: hidden; }
 tr:hover .btn-group { visibility: visible; }
+
+tr td:nth-child(5n+5) { width: 100px; }
+
+td.recipe-image { width: 64px; }
+td.recipe-image img { max-width: 64px; max-height: 64px; }
+
+.text-centered { text-align: center; }
+.text-right { text-align: right; }
+.dropdown-menu.tiny { min-width: 80px; }
+
+.label { display: inline-block; margin-right: 0px; overflow: hidden; }
+.label .append { background-color: rgba(255, 0, 0, .25); border-left: 1px solid #888; height: 17px; line-height: 17px; display: inline-block; margin: -1px -5px -2px 0; padding: 0 5px 0 3px; -moz-box-shadow: inset 1px 0 #aaa; -webkit-box-shadow: inset 1px 0 #aaa; box-shadow: inset 1px 0 #aaa; -moz-border-radius-topright: inherit; -moz-border-radius-bottomright: inherit; -webkit-border-bottom-right-radius: inherit; -webkit-border-top-right-radius: inherit; border-bottom-right-radius: inherit; border-top-right-radius: inherit; }
+.label .append:hover { background-color: #DA4F49; }
