@@ -51,7 +51,7 @@
                   <li><a href="manage/add">Neues Rezept</a></li>
                   <li class="divider"></li>
                   <li><a href="manage/list">Liste</a></li>
-                  <li><a href="#">Suche</a></li>
+                  <li><a href="manage/search">Suche</a></li>
                 </ul>
               </li>
               <li><a href="manage/ingredients">Zutatenliste</a></li></li>

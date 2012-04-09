@@ -4,7 +4,7 @@
 <h1>Neues Rezept <small>Ein neues Rezept anlegen</small></h1>
 <?php endif; ?>
 
-<form class="form-horizontal">
+<form class="form-horizontal" method="post" enctype="multipart/form-data">
   <fieldset>
     <legend>Metadaten</legend>
     <div class="control-group">
@@ -32,8 +32,8 @@
     </div>
   </fieldset>
   <?php $i = 0; foreach($recipe->getSteps() as $step): ?>
-  <fieldset>
-    <legend>Schritt <?php echo ++$i; ?></legend>
+  <fieldset data-step="<?php echo ++$i; ?>">
+    <legend>Schritt <?php echo $i; ?></legend>
 
     <div class="control-group">
       <label class="control-label" for="steps-<?php echo $i; ?>-titel">Titel</label>
@@ -54,24 +54,36 @@
       <label class="control-label" for="steps-<?php echo $i; ?>-duration">Zutaten</label>
       <div class="controls">
         <div class="input-append dropdown">
-          <input type="text" class="input-mini add-ingredient-amount text-centered"><button class="btn dropdown-toggle" data-toggle="dropdown"><span class="ingredient-unit">g</span> <span class="caret"></span></button>
-          <ul class="dropdown-menu pull-right tiny text-right">
+          <input type="text" class="input-mini add-ingredient-amount text-centered"><button class="btn dropdown-toggle add-ingredient-amount" data-toggle="dropdown"><span class="ingredient-unit">g</span> <span class="caret"></span></button>
+          <ul class="dropdown-menu pull-right tiny text-right add-ingredient-amount">
+            <li><a href="#">g</a></li>
             <li><a href="#">l</a></li>
             <li><a href="#">ml</a></li>
           </ul>
         </div>
 
-        <input type="text" class="input-medium add-ingredient">
-        <button class="btn"><i class="icon-plus"></i></button>
+        <input type="text" class="input-medium add-ingredient" data-provide="typeahead">
+        <button class="btn add-ingredient"><i class="icon-plus"></i></button>
 
         <p class="help-block ingredients">
           <?php foreach($step->getIngredients() as $ingr): ?>
-          <span class="label">
+          <span class="label ingredient">
+            <input type="hidden" name="steps[<?php echo $i; ?>][ingredients][amount][]" value="<?php echo $ingr->getAmount(); ?>">
+            <input type="hidden" name="steps[<?php echo $i; ?>][ingredients][unit][]" value="<?php echo $ingr->getUnit(); ?>">
+            <input type="hidden" name="steps[<?php echo $i; ?>][ingredients][ingredient][]" value="<?php echo $ingr->getName(); ?>">
             <?php echo $ingr->getAmount() . ' ' . $ingr->getUnit() . ' ' . $ingr->getName(); ?>
             <a href="#" class="append"><i class="icon-trash icon-white"></i></a>
           </span>
           <?php endforeach; ?>
         </p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="steps-<?php echo $i; ?>-todos">To-Dos</label>
+      <div class="controls">
+        <textarea class="input-xlarge" name="steps[<?php echo $i; ?>][todos]" id="steps-<?php echo $i; ?>-todos" rows="6"></textarea>
+        <span class="help-inline">neue Zeile für neues To-Do</span>
       </div>
     </div>
 
@@ -117,7 +129,7 @@
 
 <!-- jqote template -->
 <script type="text/x-jqote-template" id="tpl-step">
-<fieldset>
+<fieldset data-step="<%= this.step %>">
   <legend>Schritt <%= this.step %></legend>
 
   <div class="control-group">
@@ -140,16 +152,24 @@
     <div class="controls">
       <div class="input-append dropdown">
         <input type="text" class="input-mini add-ingredient-amount text-centered"><button class="btn dropdown-toggle" data-toggle="dropdown"><span class="ingredient-unit">g</span> <span class="caret"></span></button>
-        <ul class="dropdown-menu pull-right tiny text-right">
+        <ul class="dropdown-menu pull-right tiny text-right add-ingredient-amount">
           <li><a href="#">l</a></li>
           <li><a href="#">ml</a></li>
         </ul>
       </div>
 
       <input type="text" class="input-medium add-ingredient">
-      <button class="btn"><i class="icon-plus"></i></button>
+      <button class="btn add-ingredient"><i class="icon-plus"></i></button>
 
       <p class="help-block ingredients"></p>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="steps-<%= this.step %>-todos">To-Dos</label>
+    <div class="controls">
+      <textarea class="input-xlarge" name="steps[<%= this.step %>][todos]" id="steps-<%= this.step %>-todos" rows="6"></textarea>
+      <span class="help-inline">neue Zeile für neues To-Do</span>
     </div>
   </div>
 

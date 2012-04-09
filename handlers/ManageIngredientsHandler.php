@@ -11,6 +11,8 @@ class ManageIngredientsHandler extends AuthBaseHandler {
   protected $_template = 'index.php';
 
   public function get() {
+    $this->isLoggedIn();
+
     $viewAdapter = ViewFactory::create(ViewFactory::FILE, 'views/ingredients.php');
     $ingredientsView = new View($viewAdapter);
 
@@ -21,6 +23,24 @@ class ManageIngredientsHandler extends AuthBaseHandler {
     $ingredientsView->ingredients = $ingredients;
 
     $this->_view->content = $ingredientsView;
+    $this->_view->display();
+  }
+
+  public function post_xhr() {
+    $this->isLoggedIn();
+
+    if(isset($_POST['name'])) {
+      require_once "models/mappers/IngredientMapper.php";
+      
+      $ingredientMapper = new IngredientMapper();
+      $ingredient = $ingredientMapper->create(array('name' => $_POST['name']));
+      
+      $this->_view->id = $ingredientMapper->save($ingredient);
+    }
+    else {
+      $this->_view->error = 'No ingredient name given';
+    }
+    
     $this->_view->display();
   }
 }

@@ -23,4 +23,12 @@ class ManageEditHandler extends AuthBaseHandler {
     $this->_view->content = $editView;
     $this->_view->display();
   }
+
+  public function post($id) {
+    echo '<pre>';
+    var_dump($_POST);
+    echo $id;
+    echo '</pre>';
+    exit;
+  }
 }
